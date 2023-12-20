@@ -1,0 +1,76 @@
+CREATE TABLE Aeroporto (
+    Citta varchar(50) PRIMARY KEY,
+    Nazione varchar(3),
+    NumPiste int
+);
+
+CREATE TABLE Volo (
+    IdVolo varchar(6) UNIQUE PRIMARY KEY,
+    GiornoSett varchar(9),
+    Cittapart varchar(50) ,
+    Orapart time,
+    CittaArr varchar(50),
+    OraArr time,
+    TipoAereo varchar(10)
+);
+
+CREATE TABLE Aereo (
+    TipoAereo varchar(10) PRIMARY KEY,
+    NumPasseggeri int,
+    QtaMerci int
+);
+
+
+
+INSERT INTO Aeroporto VALUES ('Bologna','ITA',1);
+INSERT INTO Aeroporto VALUES ('Torino','ITA',1);
+INSERT INTO Aeroporto VALUES ('Milano','ITA',NULL);
+INSERT INTO Aeroporto VALUES ('Firenze','ITA',1);
+INSERT INTO Aeroporto VALUES ('Bergamo','ITA',1);
+INSERT INTO Aeroporto VALUES ('Parigi','FRA',4);
+INSERT INTO Aeroporto VALUES ('Copenaghen','DEN',NULL);
+INSERT INTO Aeroporto VALUES ('Madrid','SPA',4);
+INSERT INTO Aeroporto VALUES ('Dubai','EAU',2);
+INSERT INTO Aeroporto VALUES ('Perth','AUS',2);
+INSERT INTO Aeroporto VALUES ('Sydney','AUS',3);
+INSERT INTO Aeroporto VALUES ('Tokyo','JPN',NULL);
+INSERT INTO Aeroporto VALUES ('Francoforte','GER',NULL);
+
+INSERT INTO Volo VALUES ('AZ675','Martedi','Torino','15:10','Parigi','16:10','A319');
+INSERT INTO Volo VALUES ('QF5510','Lunedi','Perth','01:00','Bologna','23:45','A350-1000');
+INSERT INTO Volo VALUES ('AZ274','Mercoledi','Madrid','18:08','Milano','19:45','A320');
+INSERT INTO Volo VALUES ('FR213','Giovedi','Bologna','09:10','Torino','09:55','B737-800');
+INSERT INTO Volo VALUES ('FR109','Sabato','Copenaghen','13:00','Firenze','14:25','B737MAX');
+INSERT INTO Volo VALUES ('EK1119','Giovedi','Dubai','21:00','Bologna','06:10','B777-300');
+INSERT INTO Volo VALUES ('AF10','Domenica','Parigi','12:00','Bologna','13:50','A220-300');
+INSERT INTO Volo VALUES ('QF443','Venerdi','Torino','11:20','Perth','22:00','A380');
+INSERT INTO Volo VALUES ('IB1109','Giovedi','Madrid','10:00','Copenaghen','13:00','CRJ1000');
+INSERT INTO Volo VALUES ('AZ8881','Lunedi','Bergamo','11:15','Bologna','12:20','B737-700');
+INSERT INTO Volo VALUES ('AZ1124','Sabato','Torino','20:10','Francoforte','21:25','DC9');
+INSERT INTO Volo VALUES ('AZ81','Lunedi','Tokyo','02:15','Bologna','21:20','MD11');
+
+INSERT INTO Aereo VALUES ('A319',100, 12);
+INSERT INTO Aereo VALUES ('A350-1000',220, 120);
+INSERT INTO Aereo VALUES ('A320',150, 19);
+INSERT INTO Aereo VALUES ('B737-800',161, 20);
+INSERT INTO Aereo VALUES ('B737MAX',180, 22);
+INSERT INTO Aereo VALUES ('B777-300',440, 150);
+INSERT INTO Aereo VALUES ('A220-300',85, 10);
+INSERT INTO Aereo VALUES ('A380',670, 200);
+INSERT INTO Aereo VALUES ('CRJ1000',110, 14);
+INSERT INTO Aereo VALUES ('B737-700',140, 11);
+INSERT INTO Aereo VALUES ('DC9',90, 9);
+INSERT INTO Aereo VALUES ('MD11',340, 200);
+
+
+
+-- Altero le colonne al fine di aggiungere delle Foreign key 
+ALTER TABLE Volo ADD FOREIGN KEY (Cittapart) REFERENCES Aeroporto(Citta);
+ALTER TABLE Volo ADD FOREIGN KEY (CittaArr) REFERENCES Aeroporto(Citta);
+ALTER TABLE Volo ADD FOREIGN KEY (TipoAereo) REFERENCES Aereo(TipoAereo);
+
+
+SELECT * FROM Aeroporto WHERE NumPiste IS NULL;
+SELECT * FROM Volo WHERE Cittapart = 'Torino';
+SELECT * FROM Volo WHERE CittaArr = 'Bologna';
+SELECT * FROM Volo WHERE IdVolo = 'AZ274';
